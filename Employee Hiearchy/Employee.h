@@ -17,9 +17,10 @@ class Employee
     protected:
 
         string name;
-        Date dateOfBirth;
         float payRate;
-
+        Date dateOfBirth;
+        bool clockedIn;
+    
 
     public:
 
@@ -32,8 +33,11 @@ class Employee
         void SetDateOfBirth(Date aDate);
 
         Employee();
-        Employee(string aName, float aPayRate, Date aDate);
+        Employee(string aName, float aPayRate, Date aDate, bool clockedIn);
         virtual ~Employee();
+
+        virtual void ClockIn(Date timeIn);
+        virtual float ClockOut(Date timeOut);
 
 };
 
