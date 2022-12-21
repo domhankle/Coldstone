@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Manager.h"
-#include "Employee.h"
+#include "Employee Hiearchy/Manager.h"
+#include "Employee Hiearchy/Employee.h"
 
 using namespace std;
 
