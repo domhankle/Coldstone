@@ -9,6 +9,6 @@ class CrewMember : Employee
 
     public:
     
-}
+};
 
 #endif

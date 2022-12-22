@@ -10,6 +10,6 @@ class Trainee : Employee
     public:
 
     
-}
+};
 
 #endif

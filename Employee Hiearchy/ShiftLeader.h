@@ -9,6 +9,6 @@ class ShiftLeader : Employee
 
     public:
     
-}
+};
 
 #endif

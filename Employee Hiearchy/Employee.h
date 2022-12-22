@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "../Date.h"
+#include "../Time.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ class Employee
         string GetName();
         float GetPayRate();
         int GetSocialSecurityNumber();
+        bool IsClockedIn();
 
         void SetName(string aName);
         void SetPayRate(float aPayRate);
@@ -36,8 +38,12 @@ class Employee
         Employee(string aName, float aPayRate, Date aDate, bool clockedIn);
         virtual ~Employee();
 
-        virtual void ClockIn(Date timeIn);
-        virtual float ClockOut(Date timeOut);
+        Employee(const Employee& otherEmployee);
+
+        void operator=(const Employee& otherEmployee);
+
+        virtual void ClockIn(Time timeIn);
+        virtual float ClockOut(Time timeOut);
 
 };
 

@@ -2,14 +2,14 @@
 #define MANGER_H
 
 #include "Employee.h"
-//#include "WorkSchedule.h"
+#include "../Utility/Schedule.h"
 //#include "TruckOrder.h"
 
 class Manager : Employee
 {
     private:
 
-        //WorkSchedule* currentSchedule;
+        Schedule *workSchedule;
         //TruckOrder* currentOrder;
 
 
