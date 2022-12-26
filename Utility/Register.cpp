@@ -85,6 +85,6 @@ void Register::operator=(const Register& otherRegister)
 
 ostream& operator<<(ostream& out, const Register& registerObj)
 {
-    out << "Register ID: " << registerObj.GetRegisterID() << '\n'
-        << 
+    out << "Register ID: " << registerObj.GetRegisterID() << '\n';
+    
 }
