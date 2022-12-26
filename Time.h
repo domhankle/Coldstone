@@ -8,7 +8,7 @@ struct Time
     int day;
 
     Time();
-    Time(int aSecond, int aMinute, int aDay);
+    Time(int aSecond, int aMinute, int aHour);
 };
 
 #endif

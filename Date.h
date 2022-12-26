@@ -1,6 +1,7 @@
 #ifndef DATE_H
 #define DATE_H
 
+#include <iostream>
 
 struct Date
 {
@@ -10,6 +11,8 @@ struct Date
 
     Date();
     Date(int aDay, int aMonth, int aYear);
+
+    void operator=(const Date& otherDate);
 };
 
 
