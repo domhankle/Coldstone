@@ -28,11 +28,11 @@ class Employee
 
     public:
 
-        string GetName();
-        float GetPayRate();
-        int GetSocialSecurityNumber();
-        bool IsClockedIn();
-        string GetEmployeeCode();
+        string GetName() const;
+        float GetPayRate() const;
+        int GetSocialSecurityNumber() const;
+        bool IsClockedIn() const;
+        string GetEmployeeCode() const;
 
         void SetName(string aName);
         void SetPayRate(float aPayRate);
@@ -52,5 +52,14 @@ class Employee
         //virtual float ClockOut(Time timeOut);
 
 };
+
+inline
+ostream& operator<<(ostream& out, const Employee& employeeObj)
+{
+    out << "Name: " << employeeObj.GetName() << '\n'
+        << "Employee Code: " << employeeObj.GetEmployeeCode() << '\n';
+
+    return out;
+}
 
 #endif

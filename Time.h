@@ -5,7 +5,7 @@ struct Time
 {
     int second;
     int minute;
-    int day;
+    int hour;
 
     Time();
     Time(int aSecond, int aMinute, int aHour);

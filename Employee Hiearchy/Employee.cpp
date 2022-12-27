@@ -19,27 +19,27 @@ Employee::~Employee()
     }
 }
 
-string Employee::GetName()
+string Employee::GetName() const
 {
     return name;
 }
 
-float Employee::GetPayRate()
+float Employee::GetPayRate() const
 {
     return payRate;
 }
 
-int Employee::GetSocialSecurityNumber()
+int Employee::GetSocialSecurityNumber() const
 {
     return socialSecurityNumber;
 }
 
-bool Employee::IsClockedIn()
+bool Employee::IsClockedIn() const
 {
     return clockedIn;
 }
 
-string Employee::GetEmployeeCode()
+string Employee::GetEmployeeCode() const
 {
     return employeeCode;
 }
@@ -82,6 +82,14 @@ void Employee::ClockIn(Time timeIn, Register& aRegister)
             this -> SetClockedStatus(true);
             registerInUse -> AddEmployeeCode(this -> GetEmployeeCode());
         }
+        else
+        {
+            std::cout << "Invalid code!" << endl;
+        }
         
+    }
+    else
+    {
+        std::cout << "Employee is already clocked in!" << endl;
     }
 }

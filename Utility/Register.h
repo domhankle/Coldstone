@@ -37,6 +37,12 @@ class Register
 };
 
 inline
-ostream& operator<<(ostream& out, const Register& registerObj);
+ostream& operator<<(ostream& out, const Register& registerObj)
+{
+    out << "Register ID: " << registerObj.GetRegisterID() << '\n'
+        << "Employee Codes On File: \n";
+    
+    return out;
+}
 
 #endif
