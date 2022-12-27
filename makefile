@@ -1,21 +1,17 @@
-output : main.o Date.o Time.o Employee.o Register.o
-	g++ main.o Date.o Employee.o Register.o -o output
+CC = g++
 
-main.o : main.cpp
-	g++ -c main.cpp
+OBJECTS = main.o Date.o Time.o Employee.o Register.o
 
-Date.o : Date.cpp Date.h
-	g++ -c Date.cpp
+H_COMPILED = *.h.gch
+EXE_COMPILED = *.exe
 
-Time.o : Time.cpp Time.h
-	g++ -c Time.cpp
+CLEAN_1 = del
 
-Employee.o : Employee.cpp Employee.h
-	g++ -c Employee.cpp
+output : $(OBJECTS)
+	$(CC) $^ -o $@
 
-Register.o : Register.cpp Register.h
-	g++ -c Register.cpp
+%.o : %.cpp %.h
+	$(CC) -c $^
 
 clean :
-	del *.o
-	del output.exe
+	$(CLEAN_1) $(OBJECTS) $(H_COMPILED) $(EXE_COMPILED)
