@@ -10,28 +10,53 @@ Register::Register(int aID)
 
 Register::Register(const Register& otherRegister)
 {
-    for(int i = 0; i < otherRegister.employeeCodes.size(); i++)
+
+    if(this != &otherRegister)
     {
-        this -> AddEmployeeCode(otherRegister.GetEmployeeCode(i));
-    }
+        TimeCard *card = nullptr;
 
-    for(int i = 0; i < otherRegister.employeesClockInTime.size(); i++)
-    {
-        this -> AddClockInTime(otherRegister.GetEmployeeClockInTime(i));
-    }
+        employeeCodes.clear();
+        employeeNames.clear();
+        workHoursRecord.clear();
 
-    this -> SetRegisterID(otherRegister.GetRegisterID());
+        for(int i = 0; i < otherRegister.GetNumEmployees(); i++)
+        {
+            this -> AddEmployeeCode(otherRegister.GetEmployeeCode(i), otherRegister.GetEmployeeName(i));
+        }
 
+        for(int i = 0; i < otherRegister.GetNumTimeCards(); i++)
+        {
+            card = new TimeCard(otherRegister.GetTimeCard(i));
+            this -> AddTimeCard(card);
+        }
+
+        this -> SetRegisterID(otherRegister.GetRegisterID());
+        }
 }
 
-Time Register::GetEmployeeClockInTime(int index) const
+Register::~Register()
 {
-    return employeesClockInTime.at(index);
+    for(int i = 0; i < this -> GetNumTimeCards(); i++)
+    {
+        delete this -> workHoursRecord.at(i);
+        this -> workHoursRecord.at(i) = nullptr;
+    }
 }
+
 
 string Register::GetEmployeeCode(int index) const
 {
     return employeeCodes.at(index);
+}
+
+string Register::GetEmployeeName(int index) const
+{
+    return employeeNames.at(index);
+}
+
+TimeCard Register::GetTimeCard(int index) const
+{
+    return *(workHoursRecord.at(index));
 }
 
 int Register::GetRegisterID() const
@@ -39,14 +64,71 @@ int Register::GetRegisterID() const
     return registerID;
 }
 
-void Register::AddClockInTime(Time aTime)
+int Register::GetNumCodesOnFile() const
 {
-    employeesClockInTime.push_back(aTime);
+    return employeeCodes.size();
 }
 
-void Register::AddEmployeeCode(string aCode)
+int Register::GetNumEmployees() const
+{
+    return employeeNames.size();
+}
+
+int Register::GetNumTimeCards() const
+{
+    return workHoursRecord.size();
+}
+
+void Register::AddTimeCard(TimeCard* aTimeCard)
+{
+    workHoursRecord.push_back(aTimeCard);
+}
+
+
+void Register::AddEmployeeCode(string aCode, string employeeName)
 {
     employeeCodes.push_back(aCode);
+    employeeNames.push_back(employeeName);
+}
+
+TimeCard* Register::TimeCardIn(Time& aTime, Date& aDate, string employeeName)
+{
+    TimeCard *card =  new TimeCard();
+
+    card -> name = employeeName;
+    card -> timeIn = aTime;
+    card -> timeOut = Time(0, 0, 0);
+    card -> dateOfTimeCard = aDate;
+
+    this -> AddTimeCard(card);
+
+
+    return card;
+}
+
+void Register::TimeCardOut(Time& aTime, TimeCard*& aTimeCardPtr)
+{
+    aTimeCardPtr -> timeOut = aTime;
+
+
+}
+
+void Register::RemoveEmployeeCode(string aCode)
+{
+    vector<string>::iterator it1 = employeeCodes.begin();
+    vector<string>::iterator it2 = employeeNames.begin();
+
+    for(int i = 0; i < employeeCodes.size(); i++)
+    {
+        if(aCode == employeeCodes.at(i))
+        {
+            employeeCodes.erase(it1);
+            employeeNames.erase(it2);
+            break;
+        }
+        it1++;
+        it2++;
+    }
 }
 
 void Register::SetRegisterID(int aID)
@@ -69,16 +151,23 @@ bool Register::CodeExists(string aCode)
 
 void Register::operator=(const Register& otherRegister)
 {
-    for(int i = 0; i < otherRegister.employeeCodes.size(); i++)
+    TimeCard *card = nullptr;
+
+    employeeCodes.clear();
+    employeeNames.clear();
+    workHoursRecord.clear();
+
+    for(int i = 0; i < otherRegister.GetNumEmployees(); i++)
     {
-        this -> AddEmployeeCode(otherRegister.GetEmployeeCode(i));
+        this -> AddEmployeeCode(otherRegister.GetEmployeeCode(i), otherRegister.GetEmployeeName(i));
+        cerr << "Loop run # " << i << endl;
     }
 
-    for(int i = 0; i < otherRegister.employeesClockInTime.size(); i++)
+    for(int i = 0; i < otherRegister.GetNumTimeCards(); i++)
     {
-        this -> AddClockInTime(otherRegister.GetEmployeeClockInTime(i));
+        card = new TimeCard(otherRegister.GetTimeCard(i));
+        this -> AddTimeCard(card);
     }
-
     this -> SetRegisterID(otherRegister.GetRegisterID());
 
 }

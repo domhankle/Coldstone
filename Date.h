@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 struct Date
 {
     int day;
@@ -14,6 +16,14 @@ struct Date
 
     void operator=(const Date& otherDate);
 };
+
+inline
+ostream& operator<<(ostream& out, const Date& dateObj)
+{
+    out << dateObj.month << "/" << dateObj.day << "/" << dateObj.year;
+
+    return out;
+}
 
 
 

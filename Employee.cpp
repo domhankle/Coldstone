@@ -2,13 +2,32 @@
 
 Employee::Employee()
     : name(" "), payRate(0.0), dateOfBirth(Date()), clockedIn(false), socialSecurityNumber(000000000),
-      registerInUse(nullptr)
+      registerInUse(nullptr), currentTimeCard(nullptr)
 {}
 
 Employee::Employee(string aName, float aPayRate, Date aDate, int aSocialSecurityNum)
     : name(aName), payRate(aPayRate), dateOfBirth(aDate), clockedIn(false), socialSecurityNumber(aSocialSecurityNum),
-      registerInUse(nullptr)
+      registerInUse(nullptr), currentTimeCard(nullptr)
 {}
+
+Employee::Employee(const Employee& otherEmployee)
+{
+    if(this != &otherEmployee)
+    {
+        this -> SetEmployeeCode(otherEmployee.GetEmployeeCode());
+        this -> SetPayRate(otherEmployee.GetPayRate());
+        this -> SetClockedStatus(otherEmployee.IsClockedIn());
+        this -> SetDateOfBirth(otherEmployee.GetDateOfBirth());
+        this -> SetSocialSecurityNumber(otherEmployee.GetSocialSecurityNumber());
+
+        currentTimeCard = new TimeCard();
+        registerInUse = new Register();
+
+        *currentTimeCard = *otherEmployee.currentTimeCard;
+        *registerInUse = *otherEmployee.registerInUse;
+    }
+
+}
 
 Employee::~Employee()
 {
@@ -16,6 +35,12 @@ Employee::~Employee()
     {
         delete registerInUse;
         registerInUse = nullptr;
+    }
+    
+    if(currentTimeCard != nullptr)
+    {
+        delete currentTimeCard;
+        currentTimeCard = nullptr;
     }
 }
 
@@ -44,6 +69,11 @@ string Employee::GetEmployeeCode() const
     return employeeCode;
 }
 
+Date Employee::GetDateOfBirth() const
+{
+    return dateOfBirth;
+}
+
 void Employee::SetName(string aName)
 {
     name = aName;
@@ -69,7 +99,12 @@ void Employee::SetEmployeeCode(string aCode)
     employeeCode = aCode;
 }
 
-void Employee::ClockIn(Time timeIn, Register& aRegister)
+void Employee::SetSocialSecurityNumber(int aSocialSecurityNum)
+{
+    socialSecurityNumber = aSocialSecurityNum;
+}
+
+void Employee::ClockIn(Time& timeIn, Date& dateIn, Register& aRegister)
 {
 
     registerInUse = new Register(aRegister);
@@ -80,16 +115,48 @@ void Employee::ClockIn(Time timeIn, Register& aRegister)
         if(registerInUse -> CodeExists(this -> GetEmployeeCode()))
         {
             this -> SetClockedStatus(true);
-            registerInUse -> AddEmployeeCode(this -> GetEmployeeCode());
+            currentTimeCard = registerInUse -> TimeCardIn(timeIn, dateIn, this -> GetName());
         }
         else
         {
-            std::cout << "Invalid code!" << endl;
+            cout << "Invalid code!" << endl;
         }
         
     }
     else
     {
-        std::cout << "Employee is already clocked in!" << endl;
+        cout << "Employee is already clocked in!" << endl;
     }
+}
+
+void Employee::ClockOut(Time& timeOut, Register& aRegister)
+{
+    SetClockedStatus(false);
+    registerInUse -> TimeCardOut(timeOut, currentTimeCard);
+
+    cerr << *registerInUse
+         << endl << endl;
+
+    aRegister = *registerInUse;
+
+    delete registerInUse;
+    delete currentTimeCard;
+
+    registerInUse = nullptr;
+    currentTimeCard = nullptr;
+}
+
+void Employee::operator=(const Employee& otherEmployee)
+{
+    this -> SetEmployeeCode(otherEmployee.GetEmployeeCode());
+    this -> SetPayRate(otherEmployee.GetPayRate());
+    this -> SetClockedStatus(otherEmployee.IsClockedIn());
+    this -> SetDateOfBirth(otherEmployee.GetDateOfBirth());
+    this -> SetSocialSecurityNumber(otherEmployee.GetSocialSecurityNumber());
+
+    currentTimeCard = new TimeCard();
+    registerInUse = new Register();
+
+    *currentTimeCard = *otherEmployee.currentTimeCard;
+    *registerInUse = *otherEmployee.registerInUse;
 }
