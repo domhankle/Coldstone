@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "Date.h"
 #include "Time.h"
 #include "Register.h"
 
@@ -58,8 +57,10 @@ class Employee
 inline
 ostream& operator<<(ostream& out, const Employee& employeeObj)
 {
-    out << "Name: " << employeeObj.GetName() << '\n'
-        << "Employee Code: " << employeeObj.GetEmployeeCode() << '\n';
+    out << "Name: " << employeeObj.GetName() << endl
+        << "Employee Code: " << employeeObj.GetEmployeeCode() << endl
+        << "Pay (Hourly): " << employeeObj.GetPayRate() << endl
+        << "Date of Birth: " << employeeObj.GetDateOfBirth() << endl;
 
     return out;
 }

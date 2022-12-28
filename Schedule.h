@@ -1,38 +1,39 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
-#include "Date.h"
 #include "Employee.h"
+#include "Date.h"
+#include <vector>
 
-const int DAYS_IN_WEEK = 7;
+const static int DAYS_IN_WEEK = 7;
 
 class Schedule
 {
     private:
 
-        Date *days;
-        Employee *employees;
+        vector<Employee*> employees;
 
     public:
 
-        void SetDays(Date *setOfDays);
-        void SetEmployees(Employee *setOfEmployees);
-        
-        Employee GetEmployee();
-        int GetNumEmployees();
-        Date GetDate(int index);
+        Date *days;
 
         Schedule();
-        Schedule(Date *aSetOfDays, Employee *aSetOfEmployees);
+        Schedule(Date*& aSetOfDays, vector<Employee*> aSetOfEmployees);
         ~Schedule();
 
-        Schedule(const Schedule& otherSchedule);
+        void SetDays(Date*& SetOfDays);
+        void SetEmployees(vector<Employee*> aSetOfEmployees);
+        
+        //Employee* GetEmployeesOnSchedule() const;
+        //Date* GetDatesOnSchedule() const;
 
-        void operator=(const Schedule& otherSchedule);
+        //Schedule(const Schedule& otherSchedule);
+
+        //void operator=(const Schedule& otherSchedule);
 
 };
 
-inline
-ostream& operator<<(ostream& out, const Schedule& aSchedule);
+//inline
+//ostream& operator<<(ostream& out, const Schedule& aSchedule);
 
 #endif

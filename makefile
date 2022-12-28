@@ -1,6 +1,6 @@
 CC = g++
 
-OBJECTS = main.o Date.o Time.o Employee.o Register.o
+OBJECTS = main.o Date.o Time.o Employee.o Register.o Schedule.o
 
 H_COMPILED = *.h.gch
 EXE_COMPILED = *.exe
