@@ -34,6 +34,9 @@ class Employee
         string GetEmployeeCode() const;
         Date GetDateOfBirth() const;
 
+        TimeCard* GetTimeCardMemoryLoc() const;
+        Register* GetRegisterMemoryLoc() const;
+
         void SetName(string aName);
         void SetPayRate(float aPayRate);
         void SetDateOfBirth(Date aDate);

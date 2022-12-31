@@ -4,6 +4,7 @@
 #include "Employee.h"
 #include "Date.h"
 #include <vector>
+#include <iomanip>
 
 const static int DAYS_IN_WEEK = 7;
 
@@ -12,20 +13,19 @@ class Schedule
     private:
 
         vector<Employee*> employees;
+        Date *days;
 
     public:
-
-        Date *days;
 
         Schedule();
         Schedule(Date*& aSetOfDays, vector<Employee*> aSetOfEmployees);
         ~Schedule();
 
         void SetDays(Date*& SetOfDays);
-        void SetEmployees(vector<Employee*> aSetOfEmployees);
-        
-        //Employee* GetEmployeesOnSchedule() const;
-        //Date* GetDatesOnSchedule() const;
+        void SetEmployees(vector<Employee*> aSetOfEmployeePtrs);
+
+        vector<Employee*> GetEmployeesOnSchedule() const;
+        Date* GetDatesOnSchedule() const; 
 
         //Schedule(const Schedule& otherSchedule);
 
@@ -33,7 +33,34 @@ class Schedule
 
 };
 
-//inline
-//ostream& operator<<(ostream& out, const Schedule& aSchedule);
+inline
+ostream& operator<<(ostream& out, const Schedule& scheduleObj)
+{
+
+    out << "Schedule for " << scheduleObj.GetDatesOnSchedule()[0] << " - " << scheduleObj.GetDatesOnSchedule()[6] << endl << endl;
+
+    for(int i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        if(i != 0)
+        {
+            out << "   |   " << scheduleObj.GetDatesOnSchedule()[i];
+        }
+        else
+        {
+            out << "|   " << scheduleObj.GetDatesOnSchedule()[i];
+        }
+    }
+
+    //14 chars
+
+    out << "   |" << endl;
+
+    for(int i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        out << "  " << scheduleObj.GetEmployeesOnSchedule().at(0) -> GetName() << "   ";
+    }
+
+    return out;
+}
 
 #endif

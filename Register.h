@@ -60,9 +60,9 @@ ostream& operator<<(ostream& out, const Register& registerObj)
     }
 
     out << endl
-        << "=============================================================" << endl
+        << "============================================================" << endl
         << "TIME CARDS ON FILE (" << registerObj.GetNumTimeCards() << ")" << endl
-        << "=============================================================" << endl;
+        << "============================================================" << endl;
 
     for(int i = 0; i < registerObj.GetNumTimeCards(); i++)
     {

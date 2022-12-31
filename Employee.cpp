@@ -11,22 +11,29 @@ Employee::Employee(string aName, float aPayRate, Date aDate, int aSocialSecurity
 {}
 
 Employee::Employee(const Employee& otherEmployee)
+    : name(otherEmployee.GetName()), payRate(otherEmployee.GetPayRate()), dateOfBirth(otherEmployee.GetDateOfBirth()),
+      clockedIn(otherEmployee.IsClockedIn()), socialSecurityNumber(otherEmployee.GetSocialSecurityNumber()), registerInUse(nullptr),
+      currentTimeCard(nullptr)
 {
+    
     if(this != &otherEmployee)
     {
-        this -> SetEmployeeCode(otherEmployee.GetEmployeeCode());
-        this -> SetPayRate(otherEmployee.GetPayRate());
-        this -> SetClockedStatus(otherEmployee.IsClockedIn());
-        this -> SetDateOfBirth(otherEmployee.GetDateOfBirth());
-        this -> SetSocialSecurityNumber(otherEmployee.GetSocialSecurityNumber());
 
-        currentTimeCard = new TimeCard();
-        registerInUse = new Register();
+        if(currentTimeCard != nullptr)
+        {
+            delete currentTimeCard;
+        }
 
-        *currentTimeCard = *otherEmployee.currentTimeCard;
-        *registerInUse = *otherEmployee.registerInUse;
+        currentTimeCard = otherEmployee.GetTimeCardMemoryLoc() ? new TimeCard(*(otherEmployee.GetTimeCardMemoryLoc())) : nullptr;
+
+        if(registerInUse != nullptr)
+        {
+            delete registerInUse;
+        }
+
+        registerInUse = otherEmployee.GetRegisterMemoryLoc() ? new Register(*(otherEmployee.GetRegisterMemoryLoc())) : nullptr;
+
     }
-
 }
 
 Employee::~Employee()
@@ -42,6 +49,16 @@ Employee::~Employee()
         delete currentTimeCard;
         currentTimeCard = nullptr;
     }
+}
+
+TimeCard* Employee::GetTimeCardMemoryLoc() const
+{
+    return this -> currentTimeCard;
+}
+
+Register* Employee::GetRegisterMemoryLoc() const
+{
+    return this -> registerInUse;
 }
 
 string Employee::GetName() const
@@ -134,9 +151,6 @@ void Employee::ClockOut(Time& timeOut, Register& aRegister)
     SetClockedStatus(false);
     registerInUse -> TimeCardOut(timeOut, currentTimeCard);
 
-    cerr << *registerInUse
-         << endl << endl;
-
     aRegister = *registerInUse;
 
     delete registerInUse;
@@ -153,10 +167,11 @@ void Employee::operator=(const Employee& otherEmployee)
     this -> SetClockedStatus(otherEmployee.IsClockedIn());
     this -> SetDateOfBirth(otherEmployee.GetDateOfBirth());
     this -> SetSocialSecurityNumber(otherEmployee.GetSocialSecurityNumber());
+    this -> SetName(otherEmployee.GetName());
 
-    currentTimeCard = new TimeCard();
-    registerInUse = new Register();
+    delete currentTimeCard;
+    delete registerInUse;
 
-    *currentTimeCard = *otherEmployee.currentTimeCard;
-    *registerInUse = *otherEmployee.registerInUse;
+    currentTimeCard = otherEmployee.GetTimeCardMemoryLoc() ? new TimeCard(*(otherEmployee.GetTimeCardMemoryLoc())) : nullptr;
+    registerInUse = otherEmployee.GetRegisterMemoryLoc() ? new Register(*(otherEmployee.GetRegisterMemoryLoc())) : nullptr;
 }

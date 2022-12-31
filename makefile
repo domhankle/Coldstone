@@ -7,11 +7,11 @@ EXE_COMPILED = *.exe
 
 CLEAN_1 = del
 
-EXECUTABLE = ColdstoneApp
+MAIN_PROG = ColdstoneApp
 
-$(EXECUTABLE) : $(OBJECTS)
+$(MAIN_PROG) : $(OBJECTS)
 	$(CC) $^ -o $@
-	./$(EXECUTABLE)
+	./$(MAIN_PROG)
 
 %.o : %.cpp %.h
 	$(CC) -c $^

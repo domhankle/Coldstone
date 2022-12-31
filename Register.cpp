@@ -9,6 +9,7 @@ Register::Register(int aID)
 {}
 
 Register::Register(const Register& otherRegister)
+    : registerID(otherRegister.GetRegisterID())
 {
 
     if(this != &otherRegister)
@@ -30,8 +31,7 @@ Register::Register(const Register& otherRegister)
             this -> AddTimeCard(card);
         }
 
-        this -> SetRegisterID(otherRegister.GetRegisterID());
-        }
+    }
 }
 
 Register::~Register()
@@ -109,7 +109,6 @@ TimeCard* Register::TimeCardIn(Time& aTime, Date& aDate, string employeeName)
 void Register::TimeCardOut(Time& aTime, TimeCard*& aTimeCardPtr)
 {
     aTimeCardPtr -> timeOut = aTime;
-
 
 }
 

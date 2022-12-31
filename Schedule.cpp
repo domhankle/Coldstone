@@ -23,7 +23,7 @@ Schedule::~Schedule()
 {
     if(days != nullptr)
     {
-        delete days;
+        delete [] days;
         days = nullptr;
     }
 
@@ -51,22 +51,33 @@ void Schedule::SetDays(Date*& aSetOfDays)
     }
 }
 
-void Schedule::SetEmployees(vector<Employee*> aSetOfEmployees)
+void Schedule::SetEmployees(vector<Employee*> aSetOfEmployeePtrs)
 {
-
-    for(int i = 0; i < aSetOfEmployees.size(); i++)
+    for(Employee*& empPtr : employees)
     {
-        
-        if(employees.at(i) != nullptr)
-        {
-            delete employees.at(i);
-            employees.at(i) = nullptr;
-        }
-
-        employees.at(i) = new Employee();
-
-        *(employees.at(i)) = *(aSetOfEmployees.at(i));
+        delete empPtr;
+        empPtr = nullptr;
     }
+
+    employees.clear();
+
+    for(Employee*& empPtrFromObj : aSetOfEmployeePtrs)
+    {
+        this -> employees.push_back(new Employee(*(empPtrFromObj)));
+    }
+
+
+
+}
+
+vector<Employee*> Schedule::GetEmployeesOnSchedule() const
+{
+    return employees;
+}
+
+Date* Schedule::GetDatesOnSchedule() const
+{
+    return days;
 }
 
 
