@@ -24,7 +24,9 @@ class Employee
         string employeeCode;
 
         Register *registerInUse;
-        TimeCard *currentTimeCard;
+        TimeCard *currentTimeCard;  
+        
+        vector<Date*> requestOffDays;
 
     public:
         string GetName() const;
@@ -33,6 +35,8 @@ class Employee
         bool IsClockedIn() const;
         string GetEmployeeCode() const;
         Date GetDateOfBirth() const;
+        vector<Date*> GetRequestOffDays() const;
+        int GetNumRequestOffDays() const;
 
         TimeCard* GetTimeCardMemoryLoc() const;
         Register* GetRegisterMemoryLoc() const;
@@ -47,7 +51,6 @@ class Employee
         Employee();
         Employee(string aName, float aPayRate, Date aDate, int aSocialSecurityNum);
         virtual ~Employee();
-
         Employee(const Employee& otherEmployee);
 
         void operator=(const Employee& otherEmployee);

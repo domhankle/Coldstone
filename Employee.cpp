@@ -1,4 +1,5 @@
 #include "Employee.h"
+#include "DynamicMemory.h"
 
 Employee::Employee()
     : name(" "), payRate(0.0), dateOfBirth(Date()), clockedIn(false), socialSecurityNumber(000000000),
@@ -18,7 +19,6 @@ Employee::Employee(const Employee& otherEmployee)
     
     if(this != &otherEmployee)
     {
-
         if(currentTimeCard != nullptr)
         {
             delete currentTimeCard;
@@ -32,6 +32,12 @@ Employee::Employee(const Employee& otherEmployee)
         }
 
         registerInUse = otherEmployee.GetRegisterMemoryLoc() ? new Register(*(otherEmployee.GetRegisterMemoryLoc())) : nullptr;
+
+        for(int i = 0; i < otherEmployee.GetNumRequestOffDays(); i++)
+        {
+            this -> requestOffDays.push_back(new Date);
+            *(requestOffDays.at(i)) = *(otherEmployee.GetRequestOffDays().at(i));
+        }
 
     }
 }
@@ -49,6 +55,8 @@ Employee::~Employee()
         delete currentTimeCard;
         currentTimeCard = nullptr;
     }
+
+    CleanPointerVector(requestOffDays);
 }
 
 TimeCard* Employee::GetTimeCardMemoryLoc() const
@@ -89,6 +97,16 @@ string Employee::GetEmployeeCode() const
 Date Employee::GetDateOfBirth() const
 {
     return dateOfBirth;
+}
+
+vector<Date*> Employee::GetRequestOffDays() const
+{
+    return requestOffDays;
+}
+
+int Employee::GetNumRequestOffDays() const
+{
+    return requestOffDays.size();
 }
 
 void Employee::SetName(string aName)
@@ -174,4 +192,10 @@ void Employee::operator=(const Employee& otherEmployee)
 
     currentTimeCard = otherEmployee.GetTimeCardMemoryLoc() ? new TimeCard(*(otherEmployee.GetTimeCardMemoryLoc())) : nullptr;
     registerInUse = otherEmployee.GetRegisterMemoryLoc() ? new Register(*(otherEmployee.GetRegisterMemoryLoc())) : nullptr;
+
+    for(int i = 0; i < otherEmployee.GetNumRequestOffDays(); i++)
+    {
+        this -> requestOffDays.push_back(new Date);           
+        *(requestOffDays.at(i)) = *(otherEmployee.GetRequestOffDays().at(i));
+    }
 }

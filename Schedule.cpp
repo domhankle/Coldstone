@@ -1,4 +1,5 @@
 #include "Schedule.h"
+#include "DynamicMemory.h"
 
 Schedule::Schedule()
     : days(new Date[DAYS_IN_WEEK])

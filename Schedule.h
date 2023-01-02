@@ -27,6 +27,8 @@ class Schedule
         vector<Employee*> GetEmployeesOnSchedule() const;
         Date* GetDatesOnSchedule() const; 
 
+
+
         //Schedule(const Schedule& otherSchedule);
 
         //void operator=(const Schedule& otherSchedule);
@@ -57,7 +59,7 @@ ostream& operator<<(ostream& out, const Schedule& scheduleObj)
 
     for(int i = 0; i < DAYS_IN_WEEK; i++)
     {
-        out << "  " << scheduleObj.GetEmployeesOnSchedule().at(0) -> GetName() << "   ";
+        out << setw(14) << "|" << scheduleObj.GetEmployeesOnSchedule().at(i) -> GetName() << "|";
     }
 
     return out;

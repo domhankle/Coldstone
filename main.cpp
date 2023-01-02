@@ -10,7 +10,7 @@ using namespace std;
 int main()
 {   
 
-   vector<Employee*> empVector;
+    vector<Employee*> empVector;
     Date* currentSchedule = new Date[7];
 
     for(int i = 0; i < 7; i++)
