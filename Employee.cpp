@@ -33,11 +33,7 @@ Employee::Employee(const Employee& otherEmployee)
 
         registerInUse = otherEmployee.GetRegisterMemoryLoc() ? new Register(*(otherEmployee.GetRegisterMemoryLoc())) : nullptr;
 
-        for(int i = 0; i < otherEmployee.GetNumRequestOffDays(); i++)
-        {
-            this -> requestOffDays.push_back(new Date);
-            *(requestOffDays.at(i)) = *(otherEmployee.GetRequestOffDays().at(i));
-        }
+        DeepCopyPointerVector(otherEmployee.GetRequestOffDays(), this -> GetRequestOffDays());
 
     }
 }
@@ -193,9 +189,5 @@ void Employee::operator=(const Employee& otherEmployee)
     currentTimeCard = otherEmployee.GetTimeCardMemoryLoc() ? new TimeCard(*(otherEmployee.GetTimeCardMemoryLoc())) : nullptr;
     registerInUse = otherEmployee.GetRegisterMemoryLoc() ? new Register(*(otherEmployee.GetRegisterMemoryLoc())) : nullptr;
 
-    for(int i = 0; i < otherEmployee.GetNumRequestOffDays(); i++)
-    {
-        this -> requestOffDays.push_back(new Date);           
-        *(requestOffDays.at(i)) = *(otherEmployee.GetRequestOffDays().at(i));
-    }
+    DeepCopyPointerVector(otherEmployee.GetRequestOffDays(), this -> GetRequestOffDays());
 }

@@ -54,21 +54,7 @@ void Schedule::SetDays(Date*& aSetOfDays)
 
 void Schedule::SetEmployees(vector<Employee*> aSetOfEmployeePtrs)
 {
-    for(Employee*& empPtr : employees)
-    {
-        delete empPtr;
-        empPtr = nullptr;
-    }
-
-    employees.clear();
-
-    for(Employee*& empPtrFromObj : aSetOfEmployeePtrs)
-    {
-        this -> employees.push_back(new Employee(*(empPtrFromObj)));
-    }
-
-
-
+    DeepCopyPointerVector(aSetOfEmployeePtrs, this -> GetEmployeesOnSchedule());
 }
 
 vector<Employee*> Schedule::GetEmployeesOnSchedule() const
