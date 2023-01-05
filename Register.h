@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "Time.h"
+#include "DynamicMemory.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ class Register
         int GetNumCodesOnFile() const;
         int GetNumEmployees() const;
         int GetNumTimeCards() const;
+        vector<TimeCard*> GetTimeCardVector() const;
         
         void operator=(const Register& otherRegister);
 

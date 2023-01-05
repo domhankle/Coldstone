@@ -10,18 +10,17 @@ void NullifyPointerVector(vector<T1*> vectorOfPtrs)
     {
         ptr = nullptr;
     }
-};
+}
 
 template <typename T1>
 void CleanPointerVector(vector<T1*> vectorOfPtrs)
 {
-    for(T1* ptr : vectorOfPtrs
-)
+    for(T1* ptr : vectorOfPtrs)
     {
         delete ptr;
         ptr = nullptr;
     }
-};
+}
 
 template <typename T1>
 void DeepCopyPointerVector(vector<T1*> ptrsToCopy, vector<T1*> targetVector)
@@ -38,23 +37,33 @@ void DeepCopyPointerVector(vector<T1*> ptrsToCopy, vector<T1*> targetVector)
 }
 
 template <typename T1>
-void NullifyPointerArray(T1* arrayOfPtrs)
+void CleanDynamicArray(T1* array, int arraySize)
 {
-    for(T1* ptr : arrayOfPtrs)
+    if(array != nullptr)
     {
-        ptr = nullptr;
+        delete [] array;
+        array = nullptr;
     }
+
 }
 
 template <typename T1>
-void CleanPointerArray(T1* arrayOfPtrs)
+void DeepCopyDynamicArray(T1* arrayToCopy, T1* targetArray, int arraySize)
 {
-    for(T1* ptr : arrayOfPtrs)
+
+    if(arrayToCopy != nullptr)
     {
-        delete ptr;
-        ptr = nullptr;
+        CleanDynamicArray(targetArray, arraySize);
+
+        targetArray = new T1[arraySize];
+
+        for(int i = 0; i < arraySize; i++)
+        {
+            targetArray[i] = arrayToCopy[i];
+        }
     }
-}
+
+};
 
 
 #endif

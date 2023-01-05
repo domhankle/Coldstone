@@ -1,5 +1,4 @@
 #include "Schedule.h"
-#include "DynamicMemory.h"
 
 Schedule::Schedule()
     : days(new Date[DAYS_IN_WEEK])
@@ -8,48 +7,20 @@ Schedule::Schedule()
 Schedule::Schedule(Date*& aSetOfDays, vector<Employee*> aSetOfEmployees)
     : days (new Date[DAYS_IN_WEEK])
 {
-    for(int i = 0; i < DAYS_IN_WEEK; i++)
-    {
-        days[i] = aSetOfDays[i];
-    }
-
-    for(int i = 0; i < aSetOfEmployees.size(); i++)
-    {
-        employees.at(i) = new Employee();
-        *(employees.at(i)) = *(aSetOfEmployees.at(i));
-    }
+    DeepCopyDynamicArray(aSetOfDays, this -> GetDatesOnSchedule(), DAYS_IN_WEEK);
+    DeepCopyPointerVector(aSetOfEmployees, this -> GetEmployeesOnSchedule());
 }
 
 Schedule::~Schedule()
 {
-    if(days != nullptr)
-    {
-        delete [] days;
-        days = nullptr;
-    }
-
-    for(int i = 0; i < employees.size(); i++)
-    {
-        delete employees.at(i);
-        employees.at(i) = nullptr;
-    }
+    CleanDynamicArray(this -> GetDatesOnSchedule(), DAYS_IN_WEEK);
+    CleanPointerVector(this -> GetEmployeesOnSchedule());
 
 }
 
 void Schedule::SetDays(Date*& aSetOfDays)
 {
-    if(days != nullptr)
-    {
-        delete days;
-        days = nullptr;
-    }
-
-    days = new Date[7];
-
-    for(int i = 0; i < DAYS_IN_WEEK; i++)
-    {
-        days[i] = aSetOfDays[i];
-    }
+    DeepCopyDynamicArray(aSetOfDays, this -> GetDatesOnSchedule(), DAYS_IN_WEEK);
 }
 
 void Schedule::SetEmployees(vector<Employee*> aSetOfEmployeePtrs)

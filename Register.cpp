@@ -14,23 +14,15 @@ Register::Register(const Register& otherRegister)
 
     if(this != &otherRegister)
     {
-        TimeCard *card = nullptr;
-
         employeeCodes.clear();
         employeeNames.clear();
-        workHoursRecord.clear();
 
         for(int i = 0; i < otherRegister.GetNumEmployees(); i++)
         {
             this -> AddEmployeeCode(otherRegister.GetEmployeeCode(i), otherRegister.GetEmployeeName(i));
         }
 
-        for(int i = 0; i < otherRegister.GetNumTimeCards(); i++)
-        {
-            card = new TimeCard(otherRegister.GetTimeCard(i));
-            this -> AddTimeCard(card);
-        }
-
+        DeepCopyPointerVector(otherRegister.GetTimeCardVector(), this -> GetTimeCardVector());
     }
 }
 
@@ -77,6 +69,11 @@ int Register::GetNumEmployees() const
 int Register::GetNumTimeCards() const
 {
     return workHoursRecord.size();
+}
+
+vector<TimeCard*> Register::GetTimeCardVector() const
+{
+    return workHoursRecord;
 }
 
 void Register::AddTimeCard(TimeCard* aTimeCard)
@@ -150,23 +147,18 @@ bool Register::CodeExists(string aCode)
 
 void Register::operator=(const Register& otherRegister)
 {
-    TimeCard *card = nullptr;
 
     employeeCodes.clear();
     employeeNames.clear();
     workHoursRecord.clear();
 
+    this -> SetRegisterID(otherRegister.GetRegisterID());
+
     for(int i = 0; i < otherRegister.GetNumEmployees(); i++)
     {
         this -> AddEmployeeCode(otherRegister.GetEmployeeCode(i), otherRegister.GetEmployeeName(i));
-        cerr << "Loop run # " << i << endl;
     }
 
-    for(int i = 0; i < otherRegister.GetNumTimeCards(); i++)
-    {
-        card = new TimeCard(otherRegister.GetTimeCard(i));
-        this -> AddTimeCard(card);
-    }
-    this -> SetRegisterID(otherRegister.GetRegisterID());
+    DeepCopyPointerVector(otherRegister.GetTimeCardVector(), this -> GetTimeCardVector());
 
 }
